@@ -1,11 +1,17 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include("conexion.php");
 
 $usuario = $_POST['usuario'];
 $password = $_POST['password'];
 
 $sql = "INSERT INTO usuarios (usuario, password) VALUES ('$usuario','$password')";
-$conexion->query($sql);
 
-header("Location: login.php");
+if ($conexion->query($sql) === TRUE) {
+    header("Location: login.php");
+} else {
+    echo "Error: " . $conexion->error;
+}
 ?>
