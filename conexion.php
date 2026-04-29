@@ -1,4 +1,5 @@
 <?php
+// conexion.php
 $conexion = new mysqli("localhost", "fescobar_db", "", "fescobar_db");
 
 if ($conexion->connect_error) {
