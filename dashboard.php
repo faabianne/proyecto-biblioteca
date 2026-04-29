@@ -1,10 +1,11 @@
 <?php
 session_start();
-// Validación de cookie si la sesión expiró (Imagen 2)
+// Validación vía Cookie si la sesión expiró[cite: 2]
 if (!isset($_SESSION['id_usuario']) && isset($_COOKIE["id_usuario"])) {
     $_SESSION['id_usuario'] = $_COOKIE["id_usuario"];
 }
 
+// Si no hay rastro del usuario, fuera[cite: 2]
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: login.php");
     exit();
@@ -14,57 +15,41 @@ if (!isset($_SESSION['id_usuario'])) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Sistema Biblioteca</title>
+    <title>Panel de Biblioteca</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #f8f9fa; }
-        .navbar { background-color: #2c3e50 !important; border-bottom: 4px solid #d4af37; }
-        .nav-card { transition: transform 0.3s; border: none; border-left: 5px solid #8d6e63; }
-        .nav-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .sidebar { background: white; height: 100vh; padding: 2rem 1rem; border-right: 1px solid #dee2e6; }
-        .welcome-section { background: white; padding: 2rem; border-radius: 15px; border: 1px solid #dee2e6; }
-    </style>
+    <link rel="stylesheet" href="wwwroot/css/estilos_biblioteca.css">
 </head>
 <body>
-    <nav class="navbar navbar-dark p-3">
+    <nav class="navbar navbar-biblioteca navbar-dark p-3">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1 font-serif">📚 Panel de Control</span>
-            <div class="d-flex align-items-center">
-                <span class="text-white me-3 small">Hola, <b><?php echo $_SESSION['usuario'] ?? 'Admin'; ?></b></span>
-                <a href="logout.php" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
-            </div>
+            <span class="navbar-brand mb-0 h1">📚 Panel Bibliotecario</span>
+            <a href="logout.php" class="btn btn-outline-light btn-sm">Cerrar Sesión</a>
         </div>
     </nav>
 
     <div class="container mt-5">
-        <div class="welcome-section shadow-sm mb-4">
-            <h2 class="display-6">Bienvenido al Gestor Bibliotecario</h2>
-            <p class="text-muted">Administra el catálogo de libros, autores y controla los préstamos activos.</p>
+        <div class="bg-white p-5 rounded-4 shadow-sm mb-5 border-start border-5 border-warning">
+            <h2 class="display-6">Bienvenido al Sistema</h2>
+            <p class="text-muted">Gestiona el catálogo de autores, libros y préstamos de forma eficiente.</p>
         </div>
 
         <div class="row g-4">
             <div class="col-md-4">
-                <a href="autores/alta_autor.php" class="text-decoration-none text-dark">
-                    <div class="card nav-card p-4">
-                        <h4>✍️ Gestión de Autores</h4>
-                        <p class="small text-muted m-0">Registra nuevos escritores en el sistema.</p>
-                    </div>
+                <a href="autores/alta_autor.php" class="nav-card">
+                    <h4>✍️ Autores</h4>
+                    <p class="small text-muted mb-0">Registrar nuevos escritores.</p>
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="libros/alta_libro.php" class="text-decoration-none text-dark">
-                    <div class="card nav-card p-4">
-                        <h4>📖 Catálogo de Libros</h4>
-                        <p class="small text-muted m-0">Añade nuevos títulos a la colección.</p>
-                    </div>
+                <a href="libros/alta_libro.php" class="nav-card">
+                    <h4>📖 Libros</h4>
+                    <p class="small text-muted mb-0">Añadir títulos al catálogo.</p>
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="prestamos/alta_prestamo.php" class="text-decoration-none text-dark">
-                    <div class="card nav-card p-4">
-                        <h4>🤝 Control de Préstamos</h4>
-                        <p class="small text-muted m-0">Registra y supervisa entregas de libros.</p>
-                    </div>
+                <a href="prestamos/alta_prestamo.php" class="nav-card">
+                    <h4>🤝 Préstamos</h4>
+                    <p class="small text-muted mb-0">Control de entregas y fechas.</p>
                 </a>
             </div>
         </div>

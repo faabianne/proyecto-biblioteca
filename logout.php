@@ -1,10 +1,9 @@
 <?php
-// logout.php
 session_start();
 session_unset();
 session_destroy();
 
-// ELIMINAR COOKIE (Ponemos tiempo en el pasado)
+// Eliminar la cookie físicamente[cite: 5]
 if (isset($_COOKIE['id_usuario'])) {
     setcookie('id_usuario', '', time() - 3600, '/');
 }
