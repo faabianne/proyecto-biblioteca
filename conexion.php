@@ -1,14 +1,18 @@
 <?php
 // conexion.php
-// Usamos 127.0.0.1 para asegurar la conexión en el servidor real
-$host = "127.0.0.1";
+$host = "127.0.0.1"; 
 $user = "fescobar_db";
-$pass = "12345678"; // Asegúrate de que coincida con la que pusiste en el servidor
+$pass = "12345678"; 
 $db   = "fescobar_db";
 
-$conexion = new mysqli($host, $user, $pass, $db);
+// Habilitar reporte de errores detallado
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
+try {
+    $conexion = new mysqli($host, $user, $pass, $db);
+    $conexion->set_charset("utf8");
+} catch (mysqli_sql_exception $e) {
+    // Esto te dirá si el problema es la contraseña o el usuario
+    die("Error crítico de conexión: " . $e->getMessage());
 }
 ?>
