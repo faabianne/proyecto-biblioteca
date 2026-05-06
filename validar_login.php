@@ -1,25 +1,19 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
+session_start();
 include("conexion.php");
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre   = $_POST['nombre'];
-    $password = $_POST['password'];
-
-    // Validación basada en nombre y password
-    $sql = "SELECT * FROM usuarios WHERE nombre = '$nombre' AND password = '$password'";
-    $resultado = $conexion->query($sql);
-
-    if ($resultado && $resultado->num_rows > 0) {
-        echo "Bienvenido, acceso concedido.";
-    } else {
-        echo "Nombre de usuario o contraseña incorrectos.";
-    }
+$nombre = $_POST['nombre'];
+$password = $_POST['password'];
+$sql = "SELECT * FROM usuarios WHERE nombre = '$nombre' AND password = '$password'";
+$resultado = $conexion->query($sql);
+if ($resultado && $resultado->num_rows > 0) {
+$_SESSION['id_usuario'] = $nombre;
+setcookie("id_usuario", $nombre, time() + (86400 * 30), "/");
+header("Location: dashboard.php");
 } else {
-    echo "Esperando datos...";
+echo "<script>alert('Usuario o contraseña incorrectos');
+window.location='login.php';</script>";
 }
-
+}
 $conexion->close();
 ?>
