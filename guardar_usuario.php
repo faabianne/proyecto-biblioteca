@@ -5,11 +5,11 @@ error_reporting(E_ALL);
 include("conexion.php");
 
 // Recibir solo nombre y password
-$nombre   = $_POST['nombre'];
+$usuario   = $_POST['usuario'];
 $password = $_POST['password']; 
 
 // Query ajustada sin la columna de correo
-$sql = "INSERT INTO usuarios (usuario, password) VALUES ('$nombre', '$password')";
+$sql = "INSERT INTO usuarios (usuario, password) VALUES ('$usuario', '$password')";
 
 if ($conexion->query($sql) === TRUE) {
     echo "Usuario registrado con éxito.";
