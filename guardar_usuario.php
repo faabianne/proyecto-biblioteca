@@ -4,13 +4,11 @@ error_reporting(E_ALL);
 
 include("conexion.php");
 
-// 1. Recibir los datos del formulario
-// Asegúrate que en tu HTML el <input> tenga name="usuario" y name="password"
+// Recibir datos del formulario
 $usuario  = $_POST['usuario'];
 $password = $_POST['password']; 
 
-// 2. La Query corregida con las variables correctas
-// Usamos $usuario y $password que son las que definimos arriba
+// INSERT corregido: usamos 'usuario' porque 'nombre' no existe
 $sql = "INSERT INTO usuarios (usuario, password) VALUES ('$usuario', '$password')";
 
 if ($conexion->query($sql) === TRUE) {

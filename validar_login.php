@@ -1,19 +1,23 @@
 <?php
-session_start();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 include("conexion.php");
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-$nombre = $_POST['nombre'];
-$password = $_POST['password'];
-$sql = "SELECT * FROM usuarios WHERE nombre = '$nombre' AND password = '$password'";
+
+$user = $_POST['usuario'];
+$pass = $_POST['password'];
+
+// SELECT corregido para coincidir con la tabla 'usuarios'
+$sql = "SELECT * FROM usuarios WHERE usuario = '$user' AND password = '$pass'";
 $resultado = $conexion->query($sql);
-if ($resultado && $resultado->num_rows > 0) {
-$_SESSION['id_usuario'] = $nombre;
-setcookie("id_usuario", $nombre, time() + (86400 * 30), "/");
-header("Location: dashboard.php");
+
+if ($resultado->num_rows > 0) {
+    echo "Acceso concedido. Bienvenido.";
+    header("refresh:2;url=index.php"); 
 } else {
-echo "<script>alert('Usuario o contraseña incorrectos');
-window.location='login.php';</script>";
+    echo "Error: Usuario o contraseña incorrectos.";
+    header("refresh:2;url=login.php");
 }
-}
+
 $conexion->close();
 ?>
