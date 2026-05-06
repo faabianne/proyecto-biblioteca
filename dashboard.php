@@ -1,48 +1,36 @@
 <?php
-// Iniciamos la sesión para proteger la página
+// Siempre debe ser la primera línea para leer la cookie de sesión
 session_start();
 
-// Si el usuario no ha iniciado sesión, lo mandamos de vuelta al login
+// Verificamos si la variable de sesión existe
 if (!isset($_SESSION['usuario'])) {
+    // Si no hay sesión activa, destruimos cualquier rastro y mandamos al login
+    session_unset();
+    session_destroy();
     header("Location: login.php");
     exit();
 }
-
-include 'conexion.php'; // Incluimos la conexión por si deseas mostrar estadísticas después
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Proyecto Biblioteca</title>
-    <!-- Enlace al archivo de estilos que creamos -->
+    <title>Dashboard - Biblioteca</title>
     <link rel="stylesheet" href="wwwroot/css/estilos_biblioteca.css">
 </head>
 <body>
-
-    <div class="dashboard-container">
-        <h1>Sistema de Gestión de Biblioteca</h1>
+    <div style="text-align: center;">
+        <h1>Panel de Control</h1>
+        <p>Sesión iniciada como: <strong><?php echo htmlspecialchars($_SESSION['usuario']); ?></strong></p>
+        <p><small>Conectado desde: <?php echo $_SESSION['ultimo_acceso']; ?></small></p>
         
-        <div class="user-info">
-            <p>Bienvenido(a), <strong><?php echo htmlspecialchars($_SESSION['usuario']); ?></strong></p>
-        </div>
-
         <nav>
-            <div class="menu-section">
-                <h3>Administración</h3>
-                <!-- Rutas basadas en la estructura de carpetas de tu imagen -->
-                <a href="autores/alta_autor.php">Registrar Autor</a>
-                <a href="libros/alta_libro.php">Registrar Libro</a>
-                <a href="prestamos/alta_prestamo.php">Nuevo Préstamo</a>
-            </div>
-
-            <div class="menu-section" style="margin-top: 20px;">
-                <a href="logout.php" class="logout-btn">Cerrar Sesión</a>
-            </div>
+            <a href="autores/alta_autor.php">Nuevo Autor</a>
+            <a href="libros/alta_libro.php">Nuevo Libro</a>
+            <a href="prestamos/alta_prestamo.php">Nuevo Préstamo</a>
+            <br><br>
+            <a href="logout.php" style="color: #e74c3c; font-weight: bold;">Cerrar Sesión Segura</a>
         </nav>
     </div>
-
 </body>
 </html>
