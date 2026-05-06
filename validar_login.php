@@ -1,23 +1,18 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-include("conexion.php");
+include 'conexion.php';
+session_start();
 
 $user = $_POST['usuario'];
 $pass = $_POST['password'];
 
-// SELECT corregido para coincidir con la tabla 'usuarios'
-$sql = "SELECT * FROM usuarios WHERE usuario = '$user' AND password = '$pass'";
-$resultado = $conexion->query($sql);
+$sql = "SELECT * FROM usuarios WHERE usuario = '$user'";
+$result = $conn->query($sql);
 
-if ($resultado->num_rows > 0) {
-    echo "Acceso concedido. Bienvenido.";
-    header("refresh:2;url=index.php"); 
-} else {
-    echo "Error: Usuario o contraseña incorrectos.";
-    header("refresh:2;url=login.php");
-}
-
-$conexion->close();
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (password_verify($pass, $row['password'])) {
+        $_SESSION['usuario'] = $user;
+        header("Location: dashboard.php");
+    } else { echo "Password incorrecto"; }
+} else { echo "Usuario no existe"; }
 ?>
