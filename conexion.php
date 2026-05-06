@@ -5,14 +5,15 @@ $user = "fescobar_db";
 $pass = "12345678"; 
 $db   = "fescobar_db";
 
-// Conexión básica y segura
 $conexion = new mysqli($host, $user, $pass, $db);
 
-// Si hay error de conexión, lo muestra y detiene el código
 if ($conexion->connect_error) {
+    // Si sale esto, el problema sigue siendo de permisos del maestro
     die("Error de conexión: " . $conexion->connect_error);
 }
 
-// Configurar caracteres para ñ y acentos
+// Si la pantalla salía blanca, es porque llegaba aquí. 
+// Vamos a imprimir algo para estar seguros:
+echo "Conexión establecida correctamente a la base de datos.";
 $conexion->set_charset("utf8");
 ?>

@@ -1,34 +1,25 @@
 <?php
-// validar_login.php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 include("conexion.php");
 
-$usuario_form = $_POST['usuario'];
-$password_form = $_POST['password'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre   = $_POST['nombre'];
+    $password = $_POST['password'];
 
-// Buscamos al usuario (se asume id_usuario en tabla)
-$sql = "SELECT id_usuario, usuario, password FROM usuarios WHERE usuario = '$usuario_form'";
-$resultado = $conexion->query($sql);
+    // Validación basada en nombre y password
+    $sql = "SELECT * FROM usuarios WHERE nombre = '$nombre' AND password = '$password'";
+    $resultado = $conexion->query($sql);
 
-if ($resultado->num_rows > 0) {
-    $fila = $resultado->fetch_assoc();
-    
-    // Verificación de contraseña (ajusta a password_verify si usas hash)
-    if ($password_form == $fila['password']) {
-        session_start();
-        $_SESSION['usuario'] = $fila['usuario'];
-        $_SESSION['id_usuario'] = $fila['id_usuario'];
-
-        // --- CREACIÓN DE COOKIE POR 30 DÍAS (Imagen 1/3) ---
-        $cookie_name = "id_usuario";
-        $cookie_value = $fila['id_usuario'];
-        $expiry = time() + (86400 * 30); 
-        setcookie($cookie_name, $cookie_value, $expiry, "/");
-
-        header("Location: dashboard.php");
+    if ($resultado && $resultado->num_rows > 0) {
+        echo "Bienvenido, acceso concedido.";
     } else {
-        echo "<script>alert('Contraseña incorrecta'); window.location='login.php';</script>";
+        echo "Nombre de usuario o contraseña incorrectos.";
     }
 } else {
-    echo "<script>alert('Usuario no encontrado'); window.location='login.php';</script>";
+    echo "Esperando datos...";
 }
+
+$conexion->close();
 ?>
