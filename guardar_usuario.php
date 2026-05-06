@@ -9,7 +9,7 @@ $nombre   = $_POST['nombre'];
 $password = $_POST['password']; 
 
 // Query ajustada sin la columna de correo
-$sql = "INSERT INTO usuarios (nombre, password) VALUES ('$nombre', '$password')";
+$sql = "INSERT INTO usuarios (usuario, password) VALUES ('$nombre', '$password')";
 
 if ($conexion->query($sql) === TRUE) {
     echo "Usuario registrado con éxito.";
