@@ -1,18 +1,19 @@
 <?php
 // conexion.php
+// 1. Prueba con 127.0.0.1 en lugar de localhost para evitar bloqueos de socket
 $host = "127.0.0.1"; 
 $user = "fescobar_db";
 $pass = "12345678"; 
 $db   = "fescobar_db";
 
-// Habilitar reporte de errores detallado
+// Reporte de errores para saber exactamente qué falla
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 try {
     $conexion = new mysqli($host, $user, $pass, $db);
     $conexion->set_charset("utf8");
 } catch (mysqli_sql_exception $e) {
-    // Esto te dirá si el problema es la contraseña o el usuario
+    // Si esto falla, el usuario o contraseña están mal en el servidor
     die("Error crítico de conexión: " . $e->getMessage());
 }
 ?>
