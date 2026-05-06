@@ -4,13 +4,14 @@ error_reporting(E_ALL);
 
 include("conexion.php");
 
-// Recibir solo nombre y password
-$usuario   = $_POST['usuario'];
+// 1. Recibir los datos del formulario
+// Asegúrate que en tu HTML el <input> tenga name="usuario" y name="password"
+$usuario  = $_POST['usuario'];
 $password = $_POST['password']; 
 
-// Query ajustada sin la columna de correo
-// Fíjate que ahora dice 'usuario' en lugar de 'nombre'
-$sql = "INSERT INTO usuarios (usuario, password) VALUES ('$variable_user', '$variable_pass')";
+// 2. La Query corregida con las variables correctas
+// Usamos $usuario y $password que son las que definimos arriba
+$sql = "INSERT INTO usuarios (usuario, password) VALUES ('$usuario', '$password')";
 
 if ($conexion->query($sql) === TRUE) {
     echo "Usuario registrado con éxito.";
