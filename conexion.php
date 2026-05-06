@@ -3,7 +3,7 @@
 // 1. Prueba con 127.0.0.1 en lugar de localhost para evitar bloqueos de socket
 $host = "127.0.0.1"; 
 $user = "fescobar_db";
-$pass = ""; 
+$pass = 'fabian$2005$'; 
 $db   = "fescobar_db";
 
 // Reporte de errores para saber exactamente qué falla
